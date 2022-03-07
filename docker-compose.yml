@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:13.5-alpine
+    environment:
+      TZ: ${OS_TIMEZONE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}

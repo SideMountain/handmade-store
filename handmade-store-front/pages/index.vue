@@ -1,5 +1,7 @@
 <template>
-  <div><Test /></div>
+  <div>
+    <calousel />
+  </div>
 </template>
 
 <script lang="ts">

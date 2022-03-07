@@ -22,19 +22,21 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
+import Item from '@/domains/item/Item';
 
 @Component
 export default class Header extends Vue {
-  sample!: string;
+  sample!: Item;
 
   toCart() {
     this.$router.push('/order/cart');
   }
 
   async test() {
-    const sample2 = await this.$axios.get('/test/message', {
-      withCredentials: true,
-    });
+    // const sample2 = await this.$axios.get('/test/message', {
+    //   withCredentials: true,
+    // });
+    this.sample = await this.$axios.get('/test/message');
   }
 }
 </script>

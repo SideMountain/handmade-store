@@ -1,8 +1,10 @@
 <template>
-  <v-main>
+  <v-main id="main">
     <v-app>
-      <Header />
-      <nuxt />
+      <header />
+      <v-container>
+        <nuxt />
+      </v-container>
     </v-app>
   </v-main>
 </template>
