@@ -1,6 +1,8 @@
 <template>
   <div>
     <calousel />
+    <category-sheet />
+    <recommend-item-sheet />
   </div>
 </template>
 
