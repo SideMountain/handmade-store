@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="!$fetchState.pending">
     <h2>カート内の商品</h2>
     <v-sheet outlined class="ma-2 pa-3 rounded">
       <v-sheet
         outlined
-        v-for="(item, index) in items"
+        v-for="(cartItem, index) in cart.cartItems"
         :key="index"
         class="mb-2 rounded"
       >
@@ -14,17 +14,17 @@
           </v-col>
           <v-col cols="3" class="my-auto">
             <div>
-              {{ item.name }}
+              {{ cartItem.item.name }}
             </div>
             <div>
-              {{ itemAmount(item.amount) }}
+              {{ itemAmount(cartItem.item.amount) }}
             </div>
           </v-col>
           <v-col cols="2" class="my-auto">
-            {{ item.quantity }}
+            {{ cartItem.quantity }}
           </v-col>
           <v-col cols="3" class="my-auto">
-            {{ itemTotalAmount(item) }}
+            {{ itemTotalAmount(cartItem) }}
           </v-col>
         </v-row>
       </v-sheet>
@@ -37,39 +37,30 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
+import Cart from '@/domains/cart/Cart';
 import CartItem from '@/domains/cart/CartItem';
+import CartDataManager from '@/domains/cart/CartDataManager';
 
 @Component
-export default class Cart extends Vue {
-  readonly items: CartItem[] = [
-    {
-      id: 'itemId1',
-      name: 'item1',
-      amount: 1980,
-      images: '/img/no-image.png',
-      quantity: 2,
-    },
-    {
-      id: 'itemId2',
-      name: 'item2',
-      amount: 1980,
-      images: '/img/no-image.png',
-      quantity: 5,
-    },
-  ];
+export default class CartTop extends Vue {
+  cart!: Cart;
+
+  async fetch() {
+    this.cart = await CartDataManager.getCart();
+  }
 
   itemAmount(amount: number) {
     return amount.toLocaleString() + '円';
   }
 
-  itemTotalAmount(item: CartItem) {
-    return (item.amount * item.quantity).toLocaleString() + '円';
+  itemTotalAmount(cartItem: CartItem) {
+    return (cartItem.item.amount * cartItem.quantity).toLocaleString() + '円';
   }
 
   get totalAmount() {
     return (
-      this.items
-        .reduce((acc, curr) => acc + curr.amount * curr.quantity, 0)
+      this.cart.cartItems
+        .reduce((acc, curr) => acc + curr.item.amount * curr.quantity, 0)
         .toLocaleString() + '円'
     );
   }
