@@ -8,9 +8,9 @@
     >
       <v-card outlined class="pa-1" @click="toItem(item.id)">
         <v-img :src="`/img/no-image.png`" height="80px" class="mb-1" />
-        <v-card-sub-title>
+        <v-card-subtitle>
           {{ item.name }}
-        </v-card-sub-title>
+        </v-card-subtitle>
         <div>
           <v-card-text class="px-0 pb-0 text-right">
             {{ itemAmount(item.amount) }}
